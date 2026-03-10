@@ -7,9 +7,12 @@ def apply_causal_mask(scores, mask_value=-1e9):
     Return: masked scores (same shape, dtype=float)
     """
     # Write code here
-    mask = np.triu(np.ones_like(scores), k=1) > 0
+    T = scores.shape[-1]
+
+    mask = np.triu(np.ones((T, T), dtype=bool), k=1)
+
     new_scores = scores.copy()
-    new_scores[mask] = mask_value
+    new_scores[..., mask] = mask_value
 
     return new_scores
 
