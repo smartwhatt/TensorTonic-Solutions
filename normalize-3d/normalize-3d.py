@@ -6,7 +6,7 @@ def normalize_3d(v):
     """
     # Your code here
     v = np.atleast_2d(v)
-    norms = np.linalg.norm(v, axis=1)
-    norms = np.where(norms < 1e-10, 1e-10, norms)
-    result = (v.T / norms).T
+    norms = np.linalg.norm(v, axis=1, keepdims=True)
+    norms = np.maximum(norms, 1e-10)
+    result = v / norms
     return result[0] if result.shape[0] == 1 else result
